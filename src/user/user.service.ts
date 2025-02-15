@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { User } from './user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User)
-        private userRepository: Repository<User>
+        private userRepository: Repository<User>,
+
+        @InjectEntityManager()
+        private entityManagaer: EntityManager,
     ) { }
 
     getAllUsers() {
@@ -25,5 +28,19 @@ export class UserService {
         let newUser = this.userRepository.create(userDto);
         newUser = await this.userRepository.save(newUser);
         return newUser;
+    }
+
+    async getEmailByUserId(id:Number){
+        const queryRunner = this.userRepository.manager.connection.createQueryRunner();
+        const result = await queryRunner.query(`SELECT GetEmailById(${id})`);
+        await queryRunner.release();
+        return result[0][`GetEmailById(${id})`];
+    }
+
+    async getAllUsersByProcedure(){
+        const queryRunner = this.userRepository.manager.connection.createQueryRunner();
+        const result = await queryRunner.query(`call getAllUser()`);
+        await queryRunner.release();
+        return result[0];
     }
 }
