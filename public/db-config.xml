@@ -1,0 +1,31 @@
+<root>
+    <OracleConfig>
+        <type>oracle</type>
+        <username>system</username>
+        <password>root</password>
+        <synchronize>true</synchronize>
+        <connectString>192.168.1.96/xe</connectString>
+    </OracleConfig>
+    <MssqlConfig>
+        <type>mssql</type>
+        <username>mssql1433</username>
+        <password>root</password>
+        <synchronize>true</synchronize>
+        <database>demo</database>
+        <port>1433</port>
+        <host>localhost</host>
+        <options>
+            <enableArithAbort>true</enableArithAbort>
+            <trustServerCertificate>true</trustServerCertificate>
+        </options>
+    </MssqlConfig>
+    <MysqlConfig>
+        <type>mysql</type>
+        <username>root</username>
+        <password>root</password>
+        <synchronize>true</synchronize>
+        <database>demo</database>
+        <port>3306</port>
+        <host>localhost</host>
+    </MysqlConfig>
+</root>
